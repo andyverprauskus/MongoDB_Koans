@@ -1,14 +1,16 @@
 =MongoDB Ruby Driver Koans
 
-Written for Chicago Ruby by Ginny Hendry and Nola Stowe
+Rewritten and maintained by Mars Cheng
+
+Originally written for Chicago Ruby by Ginny Hendry and Nola Stowe
 
 Based on http://github.com/edgecase/ruby_koans
 
 Requires: 	
 * Ruby 1.8.x or later
 * Rake (any version)
-* MongoDB 1.4.2 or later
-* gem install mongo
+* MongoDB 1.6.0 or later
+* gem install mongo (1.0.7 or later)
 * gem install bson
 
 Recommended:	gem install bson_ext   
@@ -153,5 +155,3 @@ Brian Marick's fantastic guide for beginners Everyday Scripting with Ruby    :: 
 Author::   Jim Weirich <jim@weirichhouse.org>
 Author::   Joe O'Brien <joe@edgecase.com>
 Requires:: Ruby 1.8.x or later and Rake (any version)
-
-

@@ -7,16 +7,19 @@ Originally written for Chicago Ruby by Ginny Hendry and Nola Stowe
 Based on http://github.com/edgecase/ruby_koans
 
 Requires: 	
-* Ruby 1.8.x or later
+* Ruby 1.8.7 or later
+* RubyGems 1.5.3 or later
 * Rake (any version)
-* MongoDB 1.6.0 or later
-* gem install mongo (1.0.7 or later)
-* gem install bson
+* MongoDB 1.6.5 or later
+* gem install mongo (1.2.4 or later)
+* gem install bson (1.2.4 or later)
 
-Recommended:	gem install bson_ext   
+Recommended:	
+* gem install bson_ext   
 
 To run:
 * Download source
+  git clone git://github.com/kidrane/MongoDB_Koans.git
 * cd to that directory
 * rake
 * Edit program file that reported an error

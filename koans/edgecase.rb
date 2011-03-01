@@ -6,23 +6,57 @@ require 'test/unit/assertions'
 class FillMeInError < StandardError
 end
 
-def __(value="FILL ME IN")
-  value
+def in_ruby_version(version)
+  yield if RUBY_VERSION =~ /^#{version}/
+end
+
+def __(value="FILL ME IN", value19=:mu)
+  if RUBY_VERSION < "1.9"
+    value
+  else
+    (value19 == :mu) ? value : value19
+  end
+end
+
+def _n_(value=999999, value19=:mu)
+  if RUBY_VERSION < "1.9"
+    value
+  else
+    (value19 == :mu) ? value : value19
+  end
 end
 
 def ___(value=FillMeInError)
   value
 end
 
+class Object
+  def ____(method=nil)
+    if method
+      self.send(method)
+    end
+  end
+
+  in_ruby_version("1.9") do
+    public :method_missing
+  end
+end
+
 module EdgeCase
   class Sensei
     attr_reader :failure, :failed_test
 
-	begin
-	  AssertionError = Test::Unit::AssertionFailedError
-	rescue
-	  AssertionError = MiniTest::Assertion
-	end
+    in_ruby_version("1.8") do
+      AssertionError = Test::Unit::AssertionFailedError
+    end
+
+    in_ruby_version("1.9") do
+      if defined?(MiniTest)
+        AssertionError = MiniTest::Assertion
+      else
+        AssertionError = Test::Unit::AssertionFailedError
+      end
+    end
 
     def initialize
       @pass_count = 0
@@ -96,7 +130,7 @@ module EdgeCase
         end
       end
     end
-  end      
+  end
 
   class Koan
     include Test::Unit::Assertions
@@ -145,12 +179,12 @@ module EdgeCase
         test.setup
         begin
           test.send(method)
-        rescue StandardError => ex
+        rescue StandardError, EdgeCase::Sensei::AssertionError => ex
           test.failed(ex)
         ensure
           begin
             test.teardown
-          rescue StandardError => ex
+          rescue StandardError, EdgeCase::Sensei::AssertionError => ex
             test.failed(ex) if test.passed?
           end
         end
@@ -173,7 +207,7 @@ module EdgeCase
               load(arg)
             else
               fail "Unknown command line argument '#{arg}'"
-            end              
+            end
           end
         end
       end
